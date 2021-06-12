@@ -1,10 +1,13 @@
 var mongoose = require("mongoose");
+var User = require("./users");
 
 const connectDb = () => {
   return mongoose.connect(process.env.DATABASE_URL);
 };
 
-const models = {};
+const models = {
+  User,
+};
 
 module.exports = {
   connectDb,
