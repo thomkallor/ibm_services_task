@@ -8,7 +8,7 @@ var dotenv = require("dotenv");
 var { authenticateToken } = require("./middleware/authentication");
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var inventoryRouter = require("./routes/inventory");
 var { connectDb } = require("./models/index");
 
 dotenv.config();
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 // authentication middleware
 app.use(authenticateToken);
-app.use("/users", usersRouter);
+app.use("/users", inventoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
