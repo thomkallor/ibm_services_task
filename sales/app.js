@@ -5,6 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var dotenv = require("dotenv");
 
+var { authenticateToken } = require("./middleware/authentication");
+
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
@@ -18,6 +20,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+// authentication middleware
+app.use(authenticateToken);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler

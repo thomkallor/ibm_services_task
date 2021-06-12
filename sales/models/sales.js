@@ -5,7 +5,7 @@ const saleSchema = new mongoose.Schema({
   model: String,
   year: Number,
   quantity: Number,
-  soldOn: Date,
+  soldAt: Date,
 });
 
 const Sale = mongoose.model("Sale", saleSchema);
