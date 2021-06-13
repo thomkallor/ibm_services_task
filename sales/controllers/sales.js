@@ -26,7 +26,7 @@ const createSale = async function (req, res) {
     quantity,
     soldAt: new Date(),
   });
-  const updateURI = process.env.INVENTORY_UPDATE_ENDPOINT;
+  const updateURI = process.env.INVENTORY_UPDATE_ENDPOINT + "inventory/sale";
 
   /* 
   Update the inventory on sale.
