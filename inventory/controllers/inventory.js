@@ -47,12 +47,10 @@ const getInventory = async function (req, res) {
   let query = {};
   const { color, model, year } = req.query;
   if (color) {
-    const colorQuery = { $regex: color, $options: "i" };
-    query.color = colorQuery;
+    query.color = color;
   }
   if (model) {
-    const modelQuery = { $regex: model, $options: "i" };
-    query.model = modelQuery;
+    query.model = model;
   }
   if (year) {
     query.year = year;

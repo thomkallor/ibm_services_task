@@ -3,32 +3,28 @@ require("../models/index");
 async function up() {
   const stocks = [
     {
-      model: "Accord",
-      color: "Red",
+      model: "accord",
+      color: "red",
       year: 2012,
       quantity: 4,
-      soldAt: new Date("2020-06-11"),
     },
     {
-      model: "Punto",
-      color: "White",
+      model: "punto",
+      color: "white",
       year: 2014,
       quantity: 3,
-      soldAt: new Date("2020-06-11"),
     },
     {
-      model: "Fiesta",
-      color: "Black",
+      model: "fiesta",
+      color: "black",
       year: 2016,
       quantity: 2,
-      soldAt: new Date("2020-06-12"),
     },
     {
-      model: "Fiesta",
-      color: "Blue",
+      model: "fiesta",
+      color: "blue",
       year: 2016,
       quantity: 2,
-      soldAt: new Date("2020-06-12"),
     },
   ];
   await this("Inventory").insertMany(stocks);

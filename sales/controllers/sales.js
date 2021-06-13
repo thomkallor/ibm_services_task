@@ -6,9 +6,9 @@ const { validationResult } = require("express-validator");
 // Get nextday from the current day
 const getNextDay = (date) => {
   // one day in ms
-  const one_day_ms = 86_400_000;
+  const oneDayInms = 86_400_000;
   const timeStamp = date.getTime();
-  const nextDay = new Date(timeStamp + one_day_ms);
+  const nextDay = new Date(timeStamp + oneDayInms);
   return nextDay;
 };
 

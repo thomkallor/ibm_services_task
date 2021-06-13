@@ -7,8 +7,8 @@ var { createSale, getSalesCount } = require("../controllers/sales");
 /* CREATE sale */
 router.post(
   "/",
-  body("color").notEmpty(),
-  body("model").notEmpty(),
+  body("color").notEmpty().toLowerCase(),
+  body("model").notEmpty().toLowerCase(),
   body("year").isNumeric(),
   body("quantity").isNumeric(),
   createSale
@@ -20,6 +20,8 @@ date in format YYYY/MM/DD in URL ascii coded / -> 2F (2021%2F06%2F11)
  */
 router.get(
   "/count",
+  query("color").optional().toLowerCase(),
+  query("model").optional().toLowerCase(),
   query("year").optional().isNumeric(),
   query("soldAt").optional().isDate(),
   getSalesCount

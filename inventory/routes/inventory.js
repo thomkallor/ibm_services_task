@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 
 var { authenticateToken } = require("../middleware/authentication");
 
@@ -18,8 +18,8 @@ Not to be exposed to client.
 */
 router.put(
   "/sale",
-  body("color").notEmpty(),
-  body("model").notEmpty(),
+  body("color").notEmpty().toLowerCase(),
+  body("model").notEmpty().toLowerCase(),
   body("year").isNumeric(),
   body("quantity").isNumeric(),
   updateInventoryOnSale
@@ -28,7 +28,9 @@ router.put(
 /* GET Inventory listing. */
 router.get(
   "/",
-  body("year").optional().isNumeric(),
+  query("color").optional().toLowerCase(),
+  query("model").optional().toLowerCase(),
+  query("year").optional().isNumeric(),
   authenticateToken,
   getInventory
 );
@@ -36,8 +38,8 @@ router.get(
 /* UPDATE Inventory listing. */
 router.put(
   "/",
-  body("color").notEmpty(),
-  body("model").notEmpty(),
+  body("color").notEmpty().toLowerCase(),
+  body("model").notEmpty().toLowerCase(),
   body("year").isNumeric(),
   body("quantity").isNumeric(),
   authenticateToken,
