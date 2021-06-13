@@ -4,7 +4,12 @@ The task is to mock a sale and inventory system.
 
 Both Inventory and Sales consists of a list of cars.
 
+The data model is on the assumption that the inventory are completely unrelated, 
+
+(i.e) the sale is not based on items in the inventory rather the available items (cars).
+
 The Authentication is done using JWT. Using a separate user service.
+
 
 # Running instructions
 
