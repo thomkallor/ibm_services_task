@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "9e377377-9e66-403c-a7b0-462ff3e91d13",
+		"name": "test_ibm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"accessToken\", jsonData[\"accessToken\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"admin\",\n    \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inventory-get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/inventory?year=2016&model=FieSta&color=BLack",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"inventory"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2016"
+						},
+						{
+							"key": "model",
+							"value": "FieSta"
+						},
+						{
+							"key": "color",
+							"value": "BLack"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sales-get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3002/sales/count?soldAt=2020%2F06%2F12",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"sales",
+						"count"
+					],
+					"query": [
+						{
+							"key": "soldAt",
+							"value": "2020%2F06%2F12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inventory-get all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/inventory",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inventory-edit",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"model\": \"New Car\",\n    \"year\": 2014,\n    \"color\": \"yellow\",\n    \"quantity\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/inventory",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inventory-sold",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"model\": \"New Car\",\n    \"year\": 2014,\n    \"color\": \"yellow\",\n    \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/inventory/sale",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"inventory",
+						"sale"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-sell",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"model\": \"New Car\",\n    \"year\": 2014,\n    \"color\": \"yellow\",\n    \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3002/sales",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2MjM1NzQ3MzIsImV4cCI6MTYyMzYxMDczMn0.CZu5DfBarBzYkxLEqfzSmdMWwrIVaFqNB23iAmtMdn4"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		}
+	]
+}

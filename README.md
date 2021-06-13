@@ -18,6 +18,8 @@ The Inventory Service will run on `localhost:3001` by default.
 
 The Sales Service will run on `localhost:3002` by default.
 
+There is a postman collection included in the repo test_ibm.postman_collection.json.
+
 # Users Service
 
 ## Endpoints Example:
