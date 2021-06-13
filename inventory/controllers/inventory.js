@@ -1,4 +1,4 @@
-var models = require("../models/index");
+var { models } = require("../models/index");
 var Inventory = models.Inventory;
 const { validationResult } = require("express-validator");
 
@@ -59,7 +59,7 @@ const getInventory = async function (req, res) {
   }
 
   const inventory = await Inventory.find(query);
-  res.status(200).json(inventory);
+  return res.status(200).json(inventory);
 };
 
 module.exports = {

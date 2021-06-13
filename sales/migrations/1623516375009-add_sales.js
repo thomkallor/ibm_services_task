@@ -1,4 +1,4 @@
-var { Sale } = require("../models/index");
+require("../models/index");
 
 async function up() {
   const sales = [
@@ -31,13 +31,13 @@ async function up() {
       soldOn: new Date("2020-06-12"),
     },
   ];
-  Sale.insertMany(sales, function (err) {
+  await this("Sale").insertMany(sales, function (err) {
     return console.error(err);
   });
 }
 
 async function down() {
-  Sale.deleteMany(function (err) {
+  await this("Sale").deleteMany(function (err) {
     return console.error(err);
   });
 }

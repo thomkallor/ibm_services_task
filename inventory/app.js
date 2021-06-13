@@ -7,9 +7,9 @@ var dotenv = require("dotenv");
 
 var { authenticateToken } = require("./middleware/authentication");
 
+var { connectDb } = require("./models/index");
 var indexRouter = require("./routes/index");
 var inventoryRouter = require("./routes/inventory");
-var { connectDb } = require("./models/index");
 
 dotenv.config();
 connectDb();
@@ -33,13 +33,9 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
+  // send error
   res.status(err.status || 500);
-  res.render("error");
+  res.json(err);
 });
 
 module.exports = app;

@@ -1,5 +1,5 @@
 var axios = require("axios");
-var models = require("../models/index");
+var { models } = require("../models/index");
 var Sale = models.Sale;
 const { validationResult } = require("express-validator");
 
@@ -65,7 +65,7 @@ const getSalesCount = async function (req, res) {
   }
 
   const sale = await Sale.aggregate(query);
-  res.status(200).json(sale);
+  return res.status(200).json(sale);
 };
 
 module.exports = {
