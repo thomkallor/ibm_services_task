@@ -2,7 +2,7 @@ var { models } = require("../models/index");
 var Inventory = models.Inventory;
 const { validationResult } = require("express-validator");
 
-/* Create a inventory if validations are right */
+/* Create or update an inventory if validations are right */
 const updateInventory = async function (req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -18,7 +18,13 @@ const updateInventory = async function (req, res) {
   return res.status(200).json(inventory);
 };
 
-/* Create a inventory if validations are right */
+/* 
+Update the inventory on sale event.
+The inventory and sales has been considered completely different.
+Users are allowed to place an order on anything no validations carried out.
+The inventory will be updated if the item is present (dispatch order).
+If not found an order can be placed.
+*/
 const updateInventoryOnSale = async function (req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -27,6 +33,12 @@ const updateInventoryOnSale = async function (req, res) {
   const { color, model, year, quantity } = req.body;
   const query = { color, model, year };
   let inventory = await Inventory.findOne(query);
+
+  // return 404 if car is unavailable
+  if (!inventory) {
+    return res.status(404).json("Car not found.");
+  }
+
   const updatedQuantity = inventory.quantity - quantity;
 
   // return 403 if car is unavailable
@@ -39,6 +51,7 @@ const updateInventoryOnSale = async function (req, res) {
   return res.status(200).json(inventory);
 };
 
+// Get items in an inventory
 const getInventory = async function (req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
