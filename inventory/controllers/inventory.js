@@ -10,7 +10,8 @@ const updateInventory = async function (req, res) {
   }
   const { color, model, year } = req.body;
   const query = { color, model, year };
-  const inventory = await Inventory.updateMany(query, req.body, {
+  const inventory = await Inventory.findOneAndUpdate(query, req.body, {
+    new: true,
     upsert: true,
   });
 
@@ -25,7 +26,7 @@ const updateInventoryOnSale = async function (req, res) {
   }
   const { color, model, year, quantity } = req.body;
   const query = { color, model, year };
-  const inventory = await Inventory.findOne(query);
+  let inventory = await Inventory.findOne(query);
   const updatedQuantity = inventory.quantity - quantity;
 
   // return 403 if car is unavailable
@@ -46,16 +47,15 @@ const getInventory = async function (req, res) {
   let query = {};
   const { color, model, year } = req.query;
   if (color) {
-    query.color = color;
+    const colorQuery = { $regex: color, $options: "i" };
+    query.color = colorQuery;
   }
   if (model) {
-    query.model = model;
+    const modelQuery = { $regex: model, $options: "i" };
+    query.model = modelQuery;
   }
   if (year) {
     query.year = year;
-  }
-  if (soldOn) {
-    query.soldOn = new Date(soldOn);
   }
 
   const inventory = await Inventory.find(query);

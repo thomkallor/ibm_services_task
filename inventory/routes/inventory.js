@@ -17,7 +17,7 @@ Will be used internally to update the inventory.
 Not to be exposed to client.
 */
 router.put(
-  "/inventory/sale",
+  "/sale",
   body("color").notEmpty(),
   body("model").notEmpty(),
   body("year").isNumeric(),
@@ -27,15 +27,15 @@ router.put(
 
 /* GET Inventory listing. */
 router.get(
-  "/inventory",
-  body("year").optional.isNumeric(),
+  "/",
+  body("year").optional().isNumeric(),
   authenticateToken,
   getInventory
 );
 
 /* UPDATE Inventory listing. */
 router.put(
-  "/inventory",
+  "/",
   body("color").notEmpty(),
   body("model").notEmpty(),
   body("year").isNumeric(),

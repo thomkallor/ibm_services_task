@@ -3,6 +3,15 @@ var { models } = require("../models/index");
 var Sale = models.Sale;
 const { validationResult } = require("express-validator");
 
+// Get nextday from the current day
+const getNextDay = (date) => {
+  // one day in ms
+  const one_day_ms = 86_400_000;
+  const timeStamp = date.getTime();
+  const nextDay = new Date(timeStamp + one_day_ms);
+  return nextDay;
+};
+
 /* Create a sale if validations are right */
 const createSale = async function (req, res) {
   const errors = validationResult(req);
@@ -15,7 +24,7 @@ const createSale = async function (req, res) {
     model,
     year,
     quantity,
-    saleOn: new Date(),
+    soldAt: new Date(),
   });
   const updateURI = process.env.INVENTORY_UPDATE_ENDPOINT;
 
@@ -25,7 +34,7 @@ const createSale = async function (req, res) {
   so other functionalities could be carried out (billing, despatching).
   Made an API request and logged errors for simplicity.
   */
-  await axios
+  axios
     .put(updateURI, req.body)
     .then(function (response) {
       return response;
@@ -44,7 +53,7 @@ const getSalesCount = async function (req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
   let query = {};
-  const { color, model, year } = req.query;
+  const { color, model, year, soldAt } = req.query;
   if (color) {
     query.color = color;
   }
@@ -52,10 +61,15 @@ const getSalesCount = async function (req, res) {
     query.model = model;
   }
   if (year) {
-    query.year = year;
+    query.year = parseInt(year);
   }
-  if (soldOn) {
-    query.soldOn = new Date(soldOn);
+  if (soldAt) {
+    const date = new Date(soldAt);
+    const soldAtQuery = {
+      $gte: date,
+      $lt: getNextDay(date),
+    };
+    query.soldAt = soldAtQuery;
   }
   if (query) {
     query = [
@@ -63,7 +77,6 @@ const getSalesCount = async function (req, res) {
       { $group: { _id: null, numOfSales: { $sum: "$quantity" } } },
     ];
   }
-
   const sale = await Sale.aggregate(query);
   return res.status(200).json(sale);
 };
