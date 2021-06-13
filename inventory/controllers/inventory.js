@@ -58,7 +58,10 @@ const getInventory = async function (req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
   let query = {};
-  const { color, model, year } = req.query;
+  const { id, color, model, year } = req.query;
+  if (id) {
+    query._id = id;
+  }
   if (color) {
     query.color = color;
   }
